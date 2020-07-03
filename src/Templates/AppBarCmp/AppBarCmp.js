@@ -1,24 +1,18 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+
+import React from "react";
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Router, Switch, Route, Link, useHistory } from 'react-router-dom';  
-
-import HomePage from './Pages/HomePage/HomePage';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
+import IconButton from '@material-ui/core/IconButton'; 
+import MenuIcon from '@material-ui/icons/Menu';
+import clsx from 'clsx';
+import { useHistory, Link } from "react-router-dom";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -100,16 +94,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function App(props) {
+export default function AppBarCmp() {
   const classes = useStyles();
-  const history = useHistory();
- 
+  const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   return (
-    <Router history={history}>
-      <Switch> 
-        <Route path="/" exact component={HomePage} />
-      </Switch>
-    </Router>  
+    <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            Dashboard
+          </Typography>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
   );
 }
