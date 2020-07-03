@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AppBarCmp() {
-  const classes = useStyles();
+   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
