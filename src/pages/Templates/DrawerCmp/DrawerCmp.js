@@ -5,11 +5,13 @@ import {
   ListItemIcon, ListItemText,  
   Hidden, Divider
 } from '@material-ui/core';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import { Link } from "react-router-dom";  
 import HomeIcon from '@material-ui/icons/Home';
 import GroupIcon from '@material-ui/icons/Group';
 import StorefrontIcon from '@material-ui/icons/Storefront'; 
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'; 
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import Axios from 'axios';
 
 const drawerWidth = 240;
@@ -83,7 +85,7 @@ export default function DrawerCmp(props) {
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary={"Home"} />
+              <ListItemText primary={"Dashboard"} />
             </ListItem>
           </Link>
 
@@ -92,7 +94,7 @@ export default function DrawerCmp(props) {
               <ListItemIcon>
                 <GroupIcon />
               </ListItemIcon>
-              <ListItemText primary={"Customers"} />
+              <ListItemText primary={"New Loan"} />
             </ListItem>
           </Link>
 
@@ -101,7 +103,7 @@ export default function DrawerCmp(props) {
               <ListItemIcon>
                 <StorefrontIcon />
               </ListItemIcon>
-              <ListItemText primary={"Products"} />
+              <ListItemText primary={"Customer"} />
             </ListItem>
           </Link>
 
@@ -110,12 +112,32 @@ export default function DrawerCmp(props) {
               <ListItemIcon>
                 <AddShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary={"Orders"} />
+              <ListItemText primary={"System Users"} />
             </ListItem>
           </Link>
+          
 
         </List>
-
+        <Divider />
+        <ListSubheader inset>Saved reports</ListSubheader>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Current month" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Last quarter" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Year-end Income" />
+          </ListItem>
       </Drawer>
     </div >
   );
