@@ -66,7 +66,6 @@ export default function DrawerCmp(props) {
     fetchData()  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   
-
   const drawer = (
     <div>
 
@@ -89,7 +88,7 @@ export default function DrawerCmp(props) {
             </ListItem>
           </Link>
 
-          <Link to="/customer" className={classes.link}>
+          <Link to="/customerss" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <GroupIcon />
@@ -98,7 +97,7 @@ export default function DrawerCmp(props) {
             </ListItem>
           </Link>
 
-          <Link to="/product" className={classes.link}>
+          <Link to="/customer-list" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <StorefrontIcon />

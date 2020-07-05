@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Router, Switch, Route, Link, useHistory } from 'react-router-dom';  
 import 'react-toastify/dist/ReactToastify.css'; 
+
+import LoadingSpinner from './Components/LoadingSpinner/LoadingSpinner';
+import { interceptor } from './interceptor'; 
+import utils from './helper/utils'; 
+
 import HomePage from './pages/HomePage/HomePage';
 import ErrorPage from './pages/ErrorPage/ErrorPage'; 
-import LoadingSpinner from './Components/LoadingSpinner/LoadingSpinner';
 import SignIn from './pages/SignIn/SignIn';
 import Profile from './pages/Profile/Profile';
-import { interceptor } from './interceptor'; 
-
-import utils from './helper/utils'; 
+import CustomerList from './pages/CustomerList/CustomerList';
 
 const drawerWidth = 240; 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +57,7 @@ export default function App (props) {
       <Switch> 
         <Route exact path="/signin" component={SignIn} />
         <Route path="/" exact component={HomePage} />
+        <Route path="/customer-list" exact component={CustomerList} />
         <Route component={ErrorPage} />
       </Switch>
       {isHideSpinner?'':<LoadingSpinner />}

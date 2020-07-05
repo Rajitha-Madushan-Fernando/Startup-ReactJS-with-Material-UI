@@ -1,42 +1,35 @@
-import React, { Component } from 'react';
-import Alert from '@material-ui/lab/Alert';
-import SystemUser from "../../helper/user";
+import React, { Component, useEffect, useState } from 'react';
+
+import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
-import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 const { baseUrl } = appConfig;
 
 
 export default function HomePage(props) {
+  // const [id, setId] = useState(false);
+  // const [name, setName] = useState(false);
+  // const [email, setEmail] = useState('');
 
-    
-  // const constructor(props) = (e) => {
-  //   super(props);
-  //   this.state = { }; 
-  // }
+  useEffect(()=>{
+    //getUserDetails();
+  })
   
-  const componentDidMount =(e) => {
-    this.getUserDetails();
-  }
-  
-  const getUserDetails = (e) => {
-    // console.log(SystemUser.get())
-    if (SystemUser.get() != null) {
-      this.setState({
-        id: SystemUser.get().id,
-        name: SystemUser.get().name,
-        email: SystemUser.get().email
-      });
-    }
-  };
+  // const getUserDetails = (e) => {
+  //   // console.log(SystemUser.get())
+  //   if (SystemUser.get() != null) {
+  //     setId( SystemUser.get().id)
+  //     setName( SystemUser.get().name)
+  //     setEmail( SystemUser.get().email)
+      
+  //   }
+  // };
 
   return (
-    <div>
       <AppTemplate>
-        <div className="HomePage">
-            <h1> Home page  </h1>
+        <div className="home-page">
+        <h1> Home page.</h1>
         </div>
       </AppTemplate>
-    </div>
   )
 }
