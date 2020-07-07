@@ -47,6 +47,7 @@ export default function DrawerCmp(props) {
   const {REACT_APP_API_BASE_URL} = process.env;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+
   const fetchData = () => {  
     Axios.get(`${ REACT_APP_API_BASE_URL }`)
     .then((response)=> { 

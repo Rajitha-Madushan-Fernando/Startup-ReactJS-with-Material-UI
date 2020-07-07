@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton'; 
@@ -89,7 +90,6 @@ export default function AppBarCmp(props) {
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
-          onClose={handleClose}
         >
           
           <Link to="/profile" className={classes.link}> <MenuItem >My Profile</MenuItem></Link>
