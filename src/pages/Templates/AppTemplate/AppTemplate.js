@@ -48,11 +48,14 @@ export default function AppTemplate(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    setOpen(true); // eslint-disable-next-line react-hooks/exhaustive-deps
+    setOpen(false); // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-
-
- 
+  
+  const toggleDrawerHandler = () => {
+    console.log('toggleDrawerHandler apptemplate');
+    setOpen(!open);
+  };
+  
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -61,13 +64,12 @@ export default function AppTemplate(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
- 
-
+  
   return (  
     <div className={classes.root}>  
       <CssBaseline />
-      <AppBarCmp open={open} site={site} handleDrawerOpen={handleDrawerOpen}  />
-      <DrawerCmp theme={theme} open={open} handleDrawerClose={handleDrawerClose}></DrawerCmp>
+      <AppBarCmp open={open} site={site} toggleDrawerHandler={toggleDrawerHandler}  />
+      <DrawerCmp theme={theme} open={open} toggleDrawerHandler={toggleDrawerHandler}></DrawerCmp>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {{...props.children}} 

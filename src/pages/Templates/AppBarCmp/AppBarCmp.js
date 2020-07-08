@@ -40,63 +40,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AppBarCmp(props) { 
+export default function AppBarCmp(props) {
+  console.log('props',props);
   const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState(null); 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleClose = () => {
-    setAnchorEl(null);
-    localStorage.clear();
-    history.push('/signin'); 
-  };
+  const [anchorEl, setAnchorEl] = React.useState(null);   
+   
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleDrawerToggle = () => { 
+    props.toggleDrawerHandler(true);
+  }; 
   
-
   const classes = useStyles(); 
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" noWrap className={classes.title}>
-          Loan Management system
-        </Typography>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          color="inherit"
-          onClick={handleClick}
-        >
-          <AccountCircle />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-        >
-          
-          <Link to="/profile" className={classes.link}> <MenuItem >My Profile</MenuItem></Link>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-
-      </Toolbar>
-    </AppBar>
+    <Toolbar>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={handleDrawerToggle}
+        className={classes.menuButton}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Typography variant="h6" noWrap>
+        Responsive drawer
+      </Typography>
+    </Toolbar>
+  </AppBar>
   );
 }
