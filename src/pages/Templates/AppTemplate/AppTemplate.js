@@ -51,8 +51,7 @@ export default function AppTemplate(props) {
     setOpen(false); // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   
-  const toggleDrawerHandler = () => {
-    console.log('toggleDrawerHandler apptemplate');
+  const parantFun = () => {
     setOpen(!open);
   };
 
@@ -60,8 +59,8 @@ export default function AppTemplate(props) {
   return (  
     <div className={classes.root}>  
       <CssBaseline />
-      <AppBarCmp open={open} site={site} toggleDrawerHandler={toggleDrawerHandler}  />
-      <DrawerCmp theme={theme} open={open} toggleDrawerHandler={toggleDrawerHandler}></DrawerCmp>
+      <AppBarCmp open={open} site={site} toggleDrawerHandler={parantFun}  />
+      <DrawerCmp name={'Rajitha'} theme={theme} open={open} toggleDrawerHandler={parantFun}></DrawerCmp>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {{...props.children}} 

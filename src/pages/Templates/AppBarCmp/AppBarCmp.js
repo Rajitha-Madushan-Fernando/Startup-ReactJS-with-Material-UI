@@ -47,7 +47,7 @@ export default function AppBarCmp(props) {
    
 
   const handleDrawerToggle = () => { 
-    props.toggleDrawerHandler(true);
+    props.toggleDrawerHandler();
   }; 
   
   const classes = useStyles(); 

@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function DrawerCmp(props) {
+  console.log('props',props);
    
   const { window } = props;
   const container = window !== undefined ? () => window().document.body : undefined;
