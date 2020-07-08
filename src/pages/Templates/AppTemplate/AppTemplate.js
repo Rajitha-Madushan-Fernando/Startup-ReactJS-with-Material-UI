@@ -55,15 +55,7 @@ export default function AppTemplate(props) {
     console.log('toggleDrawerHandler apptemplate');
     setOpen(!open);
   };
-  
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   
   return (  
     <div className={classes.root}>  
