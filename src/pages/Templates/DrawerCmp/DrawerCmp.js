@@ -6,9 +6,7 @@ import {
   Hidden, Divider
 } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import { Link } from "react-router-dom";  
-import MailIcon from '@material-ui/icons/EmailOutlined';
-import InboxIcon from '@material-ui/icons/InboxOutlined';
+import { Link } from "react-router-dom"; 
 import GroupIcon from '@material-ui/icons/Group';
 import StorefrontIcon from '@material-ui/icons/Storefront'; 
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'; 
@@ -48,7 +46,7 @@ export default function DrawerCmp(props) {
   const classes = useStyles(); 
   
   const theme = props.theme;
-  const [tags, setTags] = useState(false); 
+  const [setTags] = useState(false); 
   const {REACT_APP_API_BASE_URL} = process.env; 
 
 
@@ -59,12 +57,7 @@ export default function DrawerCmp(props) {
     })
   } 
   
-  const urls = [
-    { name:'textToHash2',   url:'/textToHash' },
-    { name:'trending',      url:'/page/trending' },
-    { name:'tipsToTrend',   url:'/page/tipsToTrend' },
-    { name:'hashTagFollow', url:'/page/hashTagFollow'}
-  ]
+ 
 
   useEffect(() => {
     // setOpen(true);

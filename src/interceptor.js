@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Promise } from "es6-promise"; 
 import tokens from './helper/tokens'; 
-import utils from './helper/utils';
 
 export const interceptor =  function(excludeUrl, cb) {  
   console.log('interceptor init');
@@ -31,17 +30,24 @@ export const interceptor =  function(excludeUrl, cb) {
       return response;
     },
     (error) => {
-      if(error.message=="Network Error"){ 
+      if(error.message === "Network Error"){ 
         //utils.showError('Server offline or your offline');
         console.error('Server offline or your offline', error.message);
       }
       // Return any error which is not due to authentication back to the calling service
-      if(error.response==undefined) {
+      if(error.response === undefined) {
         cb({loaderIsHide:true, redirectTo:''})
         return new Promise((resolve, reject) => {
           reject(error);
         });
       }
+      if(error.response !== 403 ) {
+        cb({loaderIsHide:true, redirectTo:''})
+        return new Promise((resolve, reject) => {
+          reject(error);
+        });
+      }
+      
       if (error.response.status !== 401) {
         cb({loaderIsHide:true, redirectTo:''})
         return new Promise((resolve, reject) => {
