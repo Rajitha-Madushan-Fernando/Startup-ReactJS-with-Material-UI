@@ -7,9 +7,10 @@ import {
 } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { Link } from "react-router-dom"; 
-import GroupIcon from '@material-ui/icons/Group';
-import StorefrontIcon from '@material-ui/icons/Storefront'; 
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'; 
+import MoneyIcon from '@material-ui/icons/Money';
+import PeopleIcon from '@material-ui/icons/People';
+import SettingsIcon from '@material-ui/icons/Settings';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import HomeIcon from '@material-ui/icons/Home';
 import Axios from 'axios';
@@ -77,11 +78,11 @@ export default function DrawerCmp(props) {
               <ListItemText primary={"Dashboard"} />
             </ListItem>
           </Link>
-
+          <Divider />
           <Link to="/customerss" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <GroupIcon />
+                <MoneyIcon />
               </ListItemIcon>
               <ListItemText primary={"New Loan"} />
             </ListItem>
@@ -90,16 +91,28 @@ export default function DrawerCmp(props) {
           <Link to="/customer-list" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <StorefrontIcon />
+                <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary={"Customer"} />
             </ListItem>
           </Link>
-
+          <Divider />
+          <ListSubheader inset>Loan applications</ListSubheader>
+          <Divider />
           <Link to="/order" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <AddShoppingCartIcon />
+                <CheckCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Approved loans"} />
+            </ListItem>
+          </Link>
+          <Divider />
+          <ListSubheader inset>System settings</ListSubheader>
+          <Link to="/order" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary={"System Users"} />
             </ListItem>
