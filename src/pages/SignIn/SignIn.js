@@ -95,12 +95,12 @@ class SignIn extends Component {
       password: this.state.password,
     };
     
-    axios.post(`${baseUrl}/api/auth/signin`, user)
+    axios.post(`${baseUrl}/auth/signin`, user)
     .then(response => {
       tokens.save({ 'userType': 'user', 'token': response.data.accessToken });
       SystemUser.save(response.data.userData);
       utils.showSuccess("Login Successfull"); 
-      this.props.history.push('/home');
+      this.props.history.push('/customer-list');
     })
     .catch(_errors => {
       if (_errors.response) {
