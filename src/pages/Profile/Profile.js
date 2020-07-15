@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
-  Card, Button, CardActions, CardContent, Typography,
-  Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, Paper, Grid,Container
+  Card, CardActions, CardContent,Container
 
 } from '@material-ui/core';
 
@@ -14,15 +12,8 @@ import Avatar from '@material-ui/core/Avatar';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import EmailIcon from '@material-ui/icons/Email';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 import SystemUser from "../../helper/user";
 
-
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import UpdateIcon from '@material-ui/icons/Update';
 import AppTemplate from "../Templates/AppTemplate/AppTemplate";
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';

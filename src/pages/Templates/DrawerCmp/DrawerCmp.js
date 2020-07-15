@@ -6,12 +6,13 @@ import {
   Hidden, Divider
 } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import { Link } from "react-router-dom";  
-import HomeIcon from '@material-ui/icons/Home';
-import GroupIcon from '@material-ui/icons/Group';
-import StorefrontIcon from '@material-ui/icons/Storefront'; 
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'; 
+import { Link } from "react-router-dom"; 
+import MoneyIcon from '@material-ui/icons/Money';
+import PeopleIcon from '@material-ui/icons/People';
+import SettingsIcon from '@material-ui/icons/Settings';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import HomeIcon from '@material-ui/icons/Home';
 import Axios from 'axios';
 
 const drawerWidth = 240;
@@ -20,32 +21,34 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  drawerPaper: { width: 'inherit' },
+  drawerPaper: {
+    width: drawerWidth
+  },
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0,
-    },
-  },  
+      flexShrink: 0
+    }
+  }, 
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   
 }));
 
 
-
-
 export default function DrawerCmp(props) {
+   
+  const { window } = props;
+  const container = window !== undefined ? () => window().document.body : undefined;
   const classes = useStyles(); 
   
   const theme = props.theme;
-  const [tags, setTags] = useState(false); 
-  const {REACT_APP_API_BASE_URL} = process.env;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [setTags] = useState(false); 
+  const {REACT_APP_API_BASE_URL} = process.env; 
 
 
   const fetchData = () => {  
@@ -55,12 +58,7 @@ export default function DrawerCmp(props) {
     })
   } 
   
-  const urls = [
-    { name:'textToHash2',   url:'/textToHash' },
-    { name:'trending',      url:'/page/trending' },
-    { name:'tipsToTrend',   url:'/page/tipsToTrend' },
-    { name:'hashTagFollow', url:'/page/hashTagFollow'}
-  ]
+ 
 
   useEffect(() => {
     // setOpen(true);
@@ -69,17 +67,9 @@ export default function DrawerCmp(props) {
   
   const drawer = (
     <div>
-
-      <Drawer
-        style={{ width: '240px' }}
-        variant="persistent"
-        anchor="left"
-        open={true}
-        classes={{ paper: classes.drawerPaper }}
-      >
-        <div className={classes.toolbar} />
-        <Divider />
-        <List>
+      <div className={classes.toolbar} />
+      <Divider />
+      <List>
           <Link to="/" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
@@ -88,11 +78,11 @@ export default function DrawerCmp(props) {
               <ListItemText primary={"Dashboard"} />
             </ListItem>
           </Link>
-
+          <Divider />
           <Link to="/customerss" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <GroupIcon />
+                <MoneyIcon />
               </ListItemIcon>
               <ListItemText primary={"New Loan"} />
             </ListItem>
@@ -101,16 +91,28 @@ export default function DrawerCmp(props) {
           <Link to="/customer-list" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <StorefrontIcon />
+                <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary={"Customer"} />
             </ListItem>
           </Link>
-
+          <Divider />
+          <ListSubheader inset>Loan applications</ListSubheader>
+          <Divider />
           <Link to="/order" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <AddShoppingCartIcon />
+                <CheckCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Approved loans"} />
+            </ListItem>
+          </Link>
+          <Divider />
+          <ListSubheader inset>System settings</ListSubheader>
+          <Link to="/order" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary={"System Users"} />
             </ListItem>
@@ -118,8 +120,8 @@ export default function DrawerCmp(props) {
           
 
         </List>
-        <Divider />
-        <ListSubheader inset>Saved reports</ListSubheader>
+      <Divider />
+      <ListSubheader inset>Saved reports</ListSubheader>
           <ListItem button>
             <ListItemIcon>
               <AssignmentIcon />
@@ -138,17 +140,13 @@ export default function DrawerCmp(props) {
             </ListItemIcon>
             <ListItemText primary="Year-end Income" />
           </ListItem>
-      </Drawer>
-    </div >
+    </div>
   );
   
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    props.toggleDrawerHandler();
   };
-  const { window } = props;
-
-  const container = window !== undefined ? () => window().document.body : undefined;
-
+  
   return (
     <nav className={classes.drawer} aria-label="mailbox folders">
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -156,14 +154,14 @@ export default function DrawerCmp(props) {
         <Drawer
           container={container}
           variant="temporary"
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
+          anchor={theme.direction === "rtl" ? "right" : "left"}
+          open={props.open}
           onClose={handleDrawerToggle}
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true // Better open performance on mobile.
           }}
         >
           {drawer}
@@ -172,7 +170,7 @@ export default function DrawerCmp(props) {
       <Hidden xsDown implementation="css">
         <Drawer
           classes={{
-            paper: classes.drawerPaper,
+            paper: classes.drawerPaper
           }}
           variant="permanent"
           open
