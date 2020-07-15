@@ -39,18 +39,20 @@ export default function App (props) {
   useEffect(() => {  
     setIsHideSpinner(true);
     // this way equal to componentWillMount()
+    console.log('41');
     interceptor(authExList, (authData)=>{ 
       const {loaderIsHide, redirectTo} = authData;
       setIsHideSpinner(loaderIsHide);    
       if(redirectTo !== ''){
         history.push(redirectTo);
       }
+      console.log('42');
     });
   },[]);
   
   const { window } = props;
   const classes = useStyles();   
-
+  
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return ( 

@@ -25,7 +25,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to={""}>
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -100,7 +100,7 @@ class SignIn extends Component {
       tokens.save({ 'userType': 'user', 'token': response.data.accessToken });
       SystemUser.save(response.data.userData);
       utils.showSuccess("Login Successfull"); 
-      this.props.history.push('/customer-list');
+      this.props.history.push('/');
     })
     .catch(_errors => {
       if (_errors.response) {
@@ -182,7 +182,7 @@ class SignIn extends Component {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to={""} variant="body2">
                 Forgot password?
               </Link>
             </Grid>

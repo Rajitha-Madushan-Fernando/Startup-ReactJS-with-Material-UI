@@ -7,24 +7,6 @@ const { baseUrl } = appConfig;
 
 
 export default function HomePage(props) {
-  // const [id, setId] = useState(false);
-  // const [name, setName] = useState(false);
-  // const [email, setEmail] = useState('');
-
-  useEffect(()=>{
-    //getUserDetails();
-  })
-  
-  // const getUserDetails = (e) => {
-  //   // console.log(SystemUser.get())
-  //   if (SystemUser.get() != null) {
-  //     setId( SystemUser.get().id)
-  //     setName( SystemUser.get().name)
-  //     setEmail( SystemUser.get().email)
-      
-  //   }
-  // };
-
   return (
       <AppTemplate>
         <div className="home-page">

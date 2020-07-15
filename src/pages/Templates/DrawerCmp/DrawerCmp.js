@@ -47,22 +47,22 @@ export default function DrawerCmp(props) {
   const classes = useStyles(); 
   
   const theme = props.theme;
-  const [setTags] = useState(false); 
-  const {REACT_APP_API_BASE_URL} = process.env; 
+  //const [setTags] = useState(false); 
+  //const {REACT_APP_API_BASE_URL} = process.env; 
 
 
-  const fetchData = () => {  
-    Axios.get(`${ REACT_APP_API_BASE_URL }`)
-    .then((response)=> { 
-      setTags(response.data);
-    })
-  } 
+  // const fetchData = () => {  
+  //   Axios.get(`${ REACT_APP_API_BASE_URL }`)
+  //   .then((response)=> { 
+  //     setTags(response.data);
+  //   })
+  // } 
   
  
 
   useEffect(() => {
     // setOpen(true);
-    fetchData()  // eslint-disable-next-line react-hooks/exhaustive-deps
+    //fetchData()  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   
   const drawer = (
@@ -109,7 +109,7 @@ export default function DrawerCmp(props) {
           </Link>
           <Divider />
           <ListSubheader inset>System settings</ListSubheader>
-          <Link to="/order" className={classes.link}>
+          <Link to="/" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <SettingsIcon />
