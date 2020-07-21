@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { MDBDataTableV5 } from 'mdbreact';
+import DataTables from 'material-ui-datatables';
 
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -20,31 +20,57 @@ const { baseUrl } = appConfig;
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
     },
     body: {
-      fontSize: 14,
+        fontSize: 14,
     },
-  }))(TableCell);
-  
+}))(TableCell);
 
-  
-  const StyledTableRow = withStyles((theme) => ({
+
+
+const StyledTableRow = withStyles((theme) => ({
     root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
     },
-  }))(TableRow);
+}))(TableRow);
 
-  
-  
+
+
 
 export default function CustomerList() {
 
     const [customers, setCustomers] = useState([]);
     console.log('customers', customers);
+
+    const TABLE_COLUMNS = [
+        {
+            key: 'Customer Name',
+            label: 'Customer Name',
+        },
+        {
+            key: 'Membership No',
+            label: 'Mebership No',
+        },
+        {
+            key: 'NIC',
+            label: 'NIC',
+        },
+        {
+            key: 'Address',
+            label: 'Address',
+        },
+
+        {
+            key: 'Mobile Number',
+            label: 'Mobile Number',
+        },
+
+
+    ];
 
     const fetchData = async () => {
 
@@ -84,9 +110,9 @@ export default function CustomerList() {
 
     const useStyles = makeStyles({
         table: {
-          minWidth: 700,
+            minWidth: 700,
         },
-      });
+    });
     const classes = useStyles();
 
     return (
@@ -115,7 +141,7 @@ export default function CustomerList() {
                             {customers.map((row) => (
                                 <StyledTableRow key={row.name}>
                                     <StyledTableCell component="th" scope="row">
-                            {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
+                                        {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
                                     </StyledTableCell>
                                     <StyledTableCell align="left">{row.membership_no}</StyledTableCell>
                                     <StyledTableCell align="left">{row.nic}</StyledTableCell>
