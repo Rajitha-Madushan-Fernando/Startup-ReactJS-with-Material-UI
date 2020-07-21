@@ -13,6 +13,8 @@
     "bezier-easing": "^2.1.0",
     "env-cmd": "^10.1.0",
     "es6-promise": "^4.2.8",
+    "material-table": "^1.66.0",
+    "mdbreact": "^4.27.0",
     "numeral": "^2.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
