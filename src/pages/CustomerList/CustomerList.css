@@ -1,0 +1,14 @@
+.new-customer-add-button{
+    float: left;
+}
+
+.customer-table th{
+    color:#fafafa !important; 
+    background-color: #212121;
+    font-weight: bold;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: inherit;
+}

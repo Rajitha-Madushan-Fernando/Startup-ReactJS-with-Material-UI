@@ -12,6 +12,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import SignIn from './pages/SignIn/SignIn';
 import Profile from './pages/Profile/Profile';
 import CustomerList from './pages/CustomerList/CustomerList';
+import NewCustomer from './pages/NewCustomer/NewCustomer';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,7 @@ export default function App (props) {
         <Route exact path="/signin" component={SignIn} />
         <Route path="/" exact component={HomePage} />
         <Route path="/customer-list" exact component={CustomerList} />
+        <Route path="/new-customer" exact component={NewCustomer} />
         <Route component={ErrorPage} />
       </Switch>
       {isHideSpinner?'':<LoadingSpinner />}

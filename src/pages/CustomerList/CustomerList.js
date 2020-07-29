@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DataTables from 'material-ui-datatables';
+import { Link } from 'react-router-dom';
 
-
+import {
+    Button, ButtonGroup,
+    Table, TableBody, TableCell,
+    TableContainer, TableHead, TableRow, Paper, Grid,Container
+  } from '@material-ui/core';
+  
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import './CustomerList.css'
 
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -46,34 +47,8 @@ export default function CustomerList() {
     const [customers, setCustomers] = useState([]);
     console.log('customers', customers);
 
-    const TABLE_COLUMNS = [
-        {
-            key: 'Customer Name',
-            label: 'Customer Name',
-        },
-        {
-            key: 'Membership No',
-            label: 'Mebership No',
-        },
-        {
-            key: 'NIC',
-            label: 'NIC',
-        },
-        {
-            key: 'Address',
-            label: 'Address',
-        },
-
-        {
-            key: 'Mobile Number',
-            label: 'Mobile Number',
-        },
-
-
-    ];
 
     const fetchData = async () => {
-
         axios.get(`${baseUrl}/customer/list`)
             .then(response => {
                 console.log('response', response);
@@ -118,7 +93,18 @@ export default function CustomerList() {
     return (
         <AppTemplate>
             <div className="customer-list">
-                <h1> Customer List page.</h1>
+                <Link to={"new-customer"} >
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className="new-customer-add-button"
+                    startIcon={<CloudUploadIcon />}
+
+                >
+                    New Customer
+                    </Button>
+                </Link>
+                <br /><br /><br />
                 {/* <ul>
                     {customers.length > 0 ? customers.map(item => (
                         <li key={item.id}>
@@ -131,18 +117,21 @@ export default function CustomerList() {
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>Customer Name</StyledTableCell>
+                                <StyledTableCell>Gender</StyledTableCell>
                                 <StyledTableCell align="left">Membership No</StyledTableCell>
                                 <StyledTableCell align="left">NIC</StyledTableCell>
                                 <StyledTableCell align="left">Mobile No</StyledTableCell>
                                 <StyledTableCell align="left">Address</StyledTableCell>
+                                <StyledTableCell align="left"></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {customers.map((row) => (
-                                <StyledTableRow key={row.name}>
+                                <StyledTableRow key={row.id}>
                                     <StyledTableCell component="th" scope="row">
                                         {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
                                     </StyledTableCell>
+                                    <StyledTableCell align="left">{row.gender.type}</StyledTableCell>
                                     <StyledTableCell align="left">{row.membership_no}</StyledTableCell>
                                     <StyledTableCell align="left">{row.nic}</StyledTableCell>
                                     <StyledTableCell align="left">{row.mobile}</StyledTableCell>

@@ -14,7 +14,6 @@
     "env-cmd": "^10.1.0",
     "es6-promise": "^4.2.8",
     "material-table": "^1.66.0",
-    "material-ui-datatables": "^0.18.2",
     "mdbreact": "^4.27.0",
     "numeral": "^2.0.6",
     "react": "^16.13.1",
