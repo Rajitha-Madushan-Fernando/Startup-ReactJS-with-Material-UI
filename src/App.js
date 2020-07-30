@@ -12,6 +12,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import SignIn from './pages/SignIn/SignIn';
 import Profile from './pages/Profile/Profile';
 import CustomerList from './pages/CustomerList/CustomerList';
+import NewCustomer from './pages/NewCustomer/NewCustomer';
 import LoanType from './pages/LoanType/LoanType';
 import NewLoanType from './pages/NewLoanType/NewLoanType';
 
@@ -34,21 +35,19 @@ export default function App (props) {
   const authExList = [
     'api/user/login',
     'api/user/',
-  ]
+  ]; 
+  
+  interceptor(authExList, (authData)=>{ 
+    const {loaderIsHide, redirectTo} = authData;
+    setIsHideSpinner(loaderIsHide);    
+    if(redirectTo!=''){
+      history.push(redirectTo);
+    }
+  });
   
   // this way equal to componentDidMount()
-
-  //next comment
   useEffect(() => {  
-    setIsHideSpinner(true);
-    // this way equal to componentWillMount()
-    interceptor(authExList, (authData)=>{ 
-      const {loaderIsHide, redirectTo} = authData;
-      setIsHideSpinner(loaderIsHide);    
-      if(redirectTo !== ''){
-        history.push(redirectTo);
-      }
-    });
+    setIsHideSpinner(true); 
   },[]);
   
   const { window } = props;
@@ -62,6 +61,7 @@ export default function App (props) {
         <Route exact path="/signin" component={SignIn} />
         <Route path="/" exact component={HomePage} />
         <Route path="/customer-list" exact component={CustomerList} />
+        <Route path="/new-customer" exact component={NewCustomer} />
         <Route path="/loantype-list" exact component={LoanType} />
         <Route path="/new-loan-type" exact component={NewLoanType} />
         <Route component={ErrorPage} />

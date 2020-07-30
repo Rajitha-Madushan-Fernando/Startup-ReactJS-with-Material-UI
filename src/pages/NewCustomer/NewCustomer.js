@@ -324,7 +324,7 @@ export default function NewCustomer(props) {
                                 className={classes.button}
                                 startIcon={<DeleteIcon />}
                             >
-                                Delete
+                                Reset
                         </Button>
                         </div>
                     </Paper>

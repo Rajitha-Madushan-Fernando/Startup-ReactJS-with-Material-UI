@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import {
     Button, ButtonGroup,
     Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Paper, Grid,Container
-  } from '@material-ui/core';
-  
+    TableContainer, TableHead, TableRow, Paper, Grid, Container
+} from '@material-ui/core';
+
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -94,14 +94,14 @@ export default function CustomerList() {
         <AppTemplate>
             <div className="customer-list">
                 <Link to={"new-customer"} >
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    className="new-customer-add-button"
-                    startIcon={<CloudUploadIcon />}
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className="new-customer-add-button"
+                        startIcon={<CloudUploadIcon />}
 
-                >
-                    New Customer
+                    >
+                        New Customer
                     </Button>
                 </Link>
                 <br /><br /><br />
@@ -115,7 +115,7 @@ export default function CustomerList() {
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="customized table">
                         <TableHead>
-                            <TableRow>
+                            <TableRow style={{ backgroundColor: '#2196f3', color: '#fafafa' }} variant="head">
                                 <StyledTableCell>Customer Name</StyledTableCell>
                                 <StyledTableCell>Gender</StyledTableCell>
                                 <StyledTableCell align="left">Membership No</StyledTableCell>
@@ -126,18 +126,25 @@ export default function CustomerList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {customers.map((row) => (
-                                <StyledTableRow key={row.id}>
-                                    <StyledTableCell component="th" scope="row">
-                                        {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="left">{row.gender.type}</StyledTableCell>
-                                    <StyledTableCell align="left">{row.membership_no}</StyledTableCell>
-                                    <StyledTableCell align="left">{row.nic}</StyledTableCell>
-                                    <StyledTableCell align="left">{row.mobile}</StyledTableCell>
-                                    <StyledTableCell align="left">{row.address}</StyledTableCell>
-                                </StyledTableRow>
-                            ))}
+                            {
+                                customers.length === 0 ?
+                                    <TableRow align="center">
+                                        <TableCell colSpan="5">No Customers Available</TableCell>
+                                    </TableRow> :
+                                    
+                                        customers.map((row) => (
+                                            <StyledTableRow key={row.id}>
+                                                <StyledTableCell component="th" scope="row">
+                                                    {row.first_name}{" "}{row.middle_name}{" "}{row.last_name}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="left">{row.gender.type}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.membership_no}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.nic}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.mobile}</StyledTableCell>
+                                                <StyledTableCell align="left">{row.address}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))
+                                    }
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -92,6 +92,7 @@ export default function LoanType() {
             <div className="loanType-list">
                 <Link to={"new-loan-type"} >
                     <Button
+                        size="small"
                         variant="contained"
                         color="secondary"
                         className="new-loan-type-add-button"
@@ -101,7 +102,7 @@ export default function LoanType() {
                         New Loan Type
             </Button>
                 </Link>
-                <br /><br /><br />
+                <br /><br />
                 <Grid item xs={12} sm={10}>
                     <Paper>
                         <TableContainer component={Paper}>
