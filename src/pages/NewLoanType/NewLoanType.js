@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -37,6 +39,108 @@ const useStyles = makeStyles((theme) => ({
 export default function NewLoanType(props) {
 
   const classes = useStyles();
+  const [status, setStatus] = useState([]);
+
+  const onChange = (e) => {
+    e.persist();
+    setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
+  }
+
+
+  //Get Common Status
+  const fetchLoanTypeStatus = async () => {
+    axios.get(`${baseUrl}/commonstatus/list`)
+      .then(response => {
+        console.log('response', response);
+        setStatus(response.data);
+      })
+  };
+
+  //Setup initial State
+  const initLoan  = {
+    loanType: null,
+    description: null,
+    status: null,
+    maxAmount: null,
+    minAmount: null,
+    minInterestRate: null,
+    maxInterestRate: null,
+    maxTimePeriod: null,
+    minTimePeriod: null
+  }
+  const [newLoan, setNewLoan] = useState(initLoan );
+  const resetData  = () => {
+    setNewLoan(initLoan)
+  }
+
+
+  //Error Handling
+  const initError  = {
+    loanType: '',
+    description: '',
+    status: '',
+    maxAmount: '',
+    minAmount: '',
+    minInterestRate: '',
+    maxInterestRate: '',
+    maxTimePeriod: '',
+    minTimePeriod: ''
+  }
+  const [errors, seterror] = useState(initError );
+  const resetError  = () => {
+    setNewLoan(initError)
+  }
+  
+
+ 
+  const SubmitNewLoanType = (e) => {
+    e.preventDefault();
+    const data = {
+      loanType: newLoan.loanType,
+      description: newLoan.description,
+
+      status: {
+        id: newLoan.status,
+      },
+      maxAmount: newLoan.maxAmount,
+      minAmount: newLoan.minAmount,
+      minInterestRate: newLoan.minInterestRate,
+      maxInterestRate: newLoan.maxInterestRate,
+      maxTimePeriod: newLoan.maxTimePeriod,
+      minTimePeriod: newLoan.minTimePeriod
+
+    };
+    console.log('data', data);
+    axios.post(`${baseUrl}/loantype/add`, data)
+      .then(function (response) {
+        console.log(response)
+        utils.showSuccess("New Loan Saved Successfully.");
+      })
+      .catch(_errors => {
+        if (_errors.response) {
+          const { errors, error } = _errors.response.data;
+          if(errors!==undefined){
+            let errorsObj = {}
+            errors.forEach(error => {
+              const { defaultMessage, field } = error
+              errorsObj[field] = defaultMessage;
+            })
+            console.log(errorsObj);
+            this.setState({ errors: errorsObj });
+          }
+          else {
+            utils.showError(error)
+          }
+
+        }
+      });
+  };
+
+
+  //This is same as componentdidmount()
+  useEffect(() => {
+    fetchLoanTypeStatus();
+  }, []);
 
   return (
     <AppTemplate>
@@ -44,16 +148,18 @@ export default function NewLoanType(props) {
         {/* <Typography variant="h4" gutterBottom>
         Add New Loan Type
       </Typography> */}
-        <form autoComplete="off">
+        <form autoComplete="off" onSubmit={SubmitNewLoanType}>
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <Paper variant="outlined" >
                 <Box width="auto" p={1} my={0.5}>
                   <TextField
+                    name="loanType"
+                    //value={newLoan.loanType}
                     id="outlined-full-width"
-                    label="Label"
-                    placeholder="Placeholder"
-                    helperText="Full width!"
+                    label="Loan Type Name"
+                    placeholder="Enter Loan Type Name"
+                    helperText={errors.loanType}
                     fullWidth
                     size="small"
                     margin="normal"
@@ -61,11 +167,14 @@ export default function NewLoanType(props) {
                       shrink: true,
                     }}
                     variant="outlined"
+                    onChange={onChange}
                   />
                   <TextField
+                    name="description"
+                    //value={newLoan.description}
                     id="outlined-multiline-static"
-                    label="Multiline"
-                    placeholder="Placeholder"
+                    label="Description"
+                    placeholder="Enter Description"
                     multiline
                     rows={4}
                     fullWidth
@@ -73,23 +182,33 @@ export default function NewLoanType(props) {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    onChange={onChange}
                   />
+
                   <FormControl className={classes.formControl}>
                     <InputLabel shrink htmlFor="age-native-label-placeholder">
                       Status
                     </InputLabel>
                     <Select
-                      inputProps={{
-                        name: 'status',
-                        id: 'status-native-label-placeholder',
-                      }}
+                      name="status"
+                      //value={newLoan.status}
+                      displayEmpty
+                      className={classes.selectEmpty}
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      onChange={onChange}
                     >
-                      <option value="">None</option>
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
+                      <MenuItem value="" disabled>
+                        Placeholder
+                      </MenuItem>
+                      {
+                        status.map((eachRow, index) => {
+                          return (
+                            <MenuItem value={eachRow.id} key={eachRow.id}>{eachRow.type}</MenuItem>
+                          );
+                        })
+                      }
                     </Select>
-                    <FormHelperText>Label + placeholder</FormHelperText>
+                    <FormHelperText>Placeholder</FormHelperText>
                   </FormControl>
                 </Box>
               </Paper>
@@ -98,52 +217,64 @@ export default function NewLoanType(props) {
               <Paper variant="outlined" >
                 <div>
                   <TextField
+                    name="maxAmount"
+                    //value={newLoan.maxAmount}
                     id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
+                    label="Maximum Amount"
                     helperText="Some important text"
                     variant="outlined"
-                    style={{margin: 8}}
-                  />
-                   <TextField
-                    id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
-                    helperText="Some important text"
-                    variant="outlined"
-                    style={{margin: 8}}
+                    style={{ margin: 8 }}
+                    onChange={onChange}
                   />
                   <TextField
+                    name="minAmount"
+                    //value={newLoan.minAmount}
                     id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
+                    label="Minimum Amount"
                     helperText="Some important text"
                     variant="outlined"
-                    style={{margin: 8}}
-                  />
-                   <TextField
-                    id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
-                    helperText="Some important text"
-                    variant="outlined"
-                    style={{margin: 8}}
+                    style={{ margin: 8 }}
+                    onChange={onChange}
                   />
                   <TextField
+                    name="maxInterestRate"
+                    // value={newLoan.maxInterestRate}
                     id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
+                    label="Maximum Interest Rate"
                     helperText="Some important text"
                     variant="outlined"
-                    style={{margin: 8}}
+                    style={{ margin: 8 }}
+                    onChange={onChange}
                   />
-                   <TextField
+                  <TextField
+                    name="minInterestRate"
+                    //value={newLoan.minInterestRate}
                     id="outlined-helperText"
-                    label="Helper text"
-                    defaultValue="Default Value"
+                    label="Minimum Interest Rate"
                     helperText="Some important text"
                     variant="outlined"
-                    style={{margin: 8}}
+                    style={{ margin: 8 }}
+                    onChange={onChange}
+                  />
+                  <TextField
+                    name="maxTimePeriod"
+                    //value={newLoan.maxTimePeriod}
+                    id="outlined-helperText"
+                    label="Maximum Time Period"
+                    helperText="Some important text"
+                    variant="outlined"
+                    style={{ margin: 8 }}
+                    onChange={onChange}
+                  />
+                  <TextField
+                    name="minTimePeriod"
+                    //value={newLoan.minTimePeriod}
+                    id="outlined-helperText"
+                    label="Minimum Time Period"
+                    helperText="Some important text"
+                    variant="outlined"
+                    style={{ margin: 8 }}
+                    onChange={onChange}
                   />
 
                 </div>
@@ -154,19 +285,22 @@ export default function NewLoanType(props) {
           <Paper variant="outlined" >
             <div>
               <Button
+                type="submit"
                 variant="contained"
                 color="primary"
                 className={classes.button}
                 endIcon={<SendIcon />}
               >
-                Send
-                           </Button>
+                Save
+            </Button>
               {" "}
               <Button
+                type="reset"
                 variant="contained"
                 color="secondary"
                 className={classes.button}
                 startIcon={<DeleteIcon />}
+                onClick={resetError}
               >
                 Reset
                         </Button>
