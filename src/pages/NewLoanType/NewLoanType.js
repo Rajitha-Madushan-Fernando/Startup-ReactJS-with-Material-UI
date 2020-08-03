@@ -75,7 +75,7 @@ export default function NewLoanType(props) {
 
 
   //Error Handling
-  const initError  = {
+  const initErrors  = {
     loanType: '',
     description: '',
     status: '',
@@ -86,9 +86,9 @@ export default function NewLoanType(props) {
     maxTimePeriod: '',
     minTimePeriod: ''
   }
-  const [errors, seterror] = useState(initError );
+  const [errors, setErrors] = useState(initErrors);
   const resetError  = () => {
-    setNewLoan(initError)
+    setErrors(initErrors)
   }
   
 
@@ -113,23 +113,27 @@ export default function NewLoanType(props) {
     console.log('data', data);
     axios.post(`${baseUrl}/loantype/add`, data)
       .then(function (response) {
-        console.log(response)
+        //console.log(response)
         utils.showSuccess("New Loan Saved Successfully.");
       })
       .catch(_errors => {
+        //console.log('_errors',_errors);
         if (_errors.response) {
-          const { errors, error } = _errors.response.data;
-          if(errors!==undefined){
+          //console.log('Test');
+          const _sErrors = _errors.response.data.errors;
+          const _error = _errors.response.data.error;
+          if(_sErrors!==undefined){
             let errorsObj = {}
-            errors.forEach(error => {
+            _sErrors.forEach(error => {
               const { defaultMessage, field } = error
               errorsObj[field] = defaultMessage;
             })
-            console.log(errorsObj);
-            this.setState({ errors: errorsObj });
+            // console.log(errorsObj);
+            // console.log({ ...errors, ...errorsObj });
+            setErrors({ ...errors, ...errorsObj });
           }
           else {
-            utils.showError(error)
+            utils.showError(_error)
           }
 
         }
@@ -175,6 +179,7 @@ export default function NewLoanType(props) {
                     id="outlined-multiline-static"
                     label="Description"
                     placeholder="Enter Description"
+                    helperText={errors.description}
                     multiline
                     rows={4}
                     fullWidth
