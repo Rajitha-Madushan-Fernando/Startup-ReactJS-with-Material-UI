@@ -258,6 +258,9 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
                   />
                   <TextField
                     name="minAmount"
@@ -268,6 +271,9 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
                   />
                   <TextField
                     name="maxInterestRate"
@@ -278,6 +284,9 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
                   />
                   <TextField
                     name="minInterestRate"
@@ -288,6 +297,9 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
                   />
                   <TextField
                     name="maxTimePeriod"
@@ -298,6 +310,10 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
+
                   />
                   <TextField
                     name="minTimePeriod"
@@ -308,6 +324,9 @@ export default function EditLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
                   />
 
                 </div>

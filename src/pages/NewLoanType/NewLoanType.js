@@ -231,6 +231,9 @@ export default function NewLoanType(props) {
                     variant="outlined"
                     style={{ margin: 8 }}
                     onChange={onChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                   <TextField
                     name="minAmount"
