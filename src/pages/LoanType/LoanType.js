@@ -118,7 +118,7 @@ export default function LoanType() {
                                 </TableHead>
                                 <TableBody>
                                     {LoanTypes.map((row) => (
-                                        <StyledTableRow key={row.name}>
+                                        <StyledTableRow key={row.id}>
                                             <StyledTableCell align="left">{row.loanType}</StyledTableCell>
                                             <StyledTableCell align="left">{row.maxAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.minAmount}</StyledTableCell>

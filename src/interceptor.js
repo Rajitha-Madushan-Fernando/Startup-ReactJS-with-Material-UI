@@ -7,17 +7,10 @@ export const interceptor =  function(excludeUrl, cb) {
   axios.interceptors.request.use((request) => { 
     console.log('request',request);
     cb({loaderIsHide:false, redirectTo:''})
-   // const urlObj = new URL(request.url);
-    //if(excludeUrl.indexOf(urlObj.pathname)<0){
       const token = tokens.get('token');
       const authuser = tokens.get('userType'); 
       request.headers['Authorization'] = `Bearer ${token}`;
       request.headers['Authorization-authuser'] = `${authuser}`;
-    //}
-   // else{
-      
-   // }
-    // Return a successful response back to the calling service
     return request;
   });
   

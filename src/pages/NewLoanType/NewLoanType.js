@@ -128,8 +128,6 @@ export default function NewLoanType(props) {
               const { defaultMessage, field } = error
               errorsObj[field] = defaultMessage;
             })
-            // console.log(errorsObj);
-            // console.log({ ...errors, ...errorsObj });
             setErrors({ ...errors, ...errorsObj });
           }
           else {
@@ -166,6 +164,8 @@ export default function NewLoanType(props) {
                     helperText={errors.loanType}
                     fullWidth
                     size="small"
+                    error={errors.loanType ? 'error' : ''}
+                    
                     margin="normal"
                     InputLabelProps={{
                       shrink: true,
@@ -180,6 +180,7 @@ export default function NewLoanType(props) {
                     label="Description"
                     placeholder="Enter Description"
                     helperText={errors.description}
+                    error={errors.description ? 'error' : ''}
                     multiline
                     rows={4}
                     fullWidth
