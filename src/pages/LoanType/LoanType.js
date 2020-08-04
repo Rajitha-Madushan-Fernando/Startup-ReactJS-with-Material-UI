@@ -1,4 +1,4 @@
- 
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -114,6 +114,7 @@ export default function LoanType() {
                                         <StyledTableCell align="left">Minimum Amount</StyledTableCell>
                                         <StyledTableCell align="left">Maximum Interest Rate</StyledTableCell>
                                         <StyledTableCell align="left">Minimum Interest Rate</StyledTableCell>
+                                        <StyledTableCell align="left"></StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -124,6 +125,24 @@ export default function LoanType() {
                                             <StyledTableCell align="left">{row.minAmount}</StyledTableCell>
                                             <StyledTableCell align="left">{row.maxInterestRate}</StyledTableCell>
                                             <StyledTableCell align="left">{row.minInterestRate}</StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <ButtonGroup>
+                                                    <Link to={"edit-loan-type/" + row.id} >
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                        >
+                                                            <EditIcon />
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline-danger"
+                                                        >
+                                                            <LockOpenIcon />
+                                                        </Button>
+                                                    </Link>
+                                                </ButtonGroup>
+                                            </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

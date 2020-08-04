@@ -13,6 +13,7 @@ import {
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import SendIcon from '@material-ui/icons/Send';
+import UpdateIcon from '@material-ui/icons/Update';
 
 
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
@@ -36,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewLoanType(props) {
+export default function EditLoanType(props) {
 
+    
   const classes = useStyles();
   const [status, setStatus] = useState([]);
-   //Setup initial State
-   const initLoan  = {
+  //Setup initial State
+  const initLoan  = {
     loanType: null,
     description: null,
     status: null,
@@ -52,6 +54,14 @@ export default function NewLoanType(props) {
     maxTimePeriod: null,
     minTimePeriod: null
   }
+  const [newLoan, setNewLoan] = useState(initLoan );
+  const resetData  = () => {
+    setNewLoan(initLoan)
+  }
+
+  const loanTypeId = props.match.params.id
+
+
   const onChange = (e) => {
     e.persist();
     setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
@@ -67,11 +77,26 @@ export default function NewLoanType(props) {
       })
   };
 
- 
-  const [newLoan, setNewLoan] = useState(initLoan );
-  const resetData  = () => {
-    setNewLoan(initLoan)
-  }
+  //Get Loan Type details by ID
+  const fetchLoanTypeData = async (LoanTypeId) => {
+    axios.get(`${baseUrl}/loantype/list/` + LoanTypeId)
+      .then(response => {
+        console.log('response', response);
+        setNewLoan({
+            ...newLoan,
+            ...response.data,
+            status:response.data.status.id
+        })
+        // console.log('format',{
+        //     ...newLoan,
+        //     ...response.data,
+        //     status:response.data.status.id
+        // });
+
+      })
+  };
+  
+  
 
 
   //Error Handling
@@ -93,9 +118,10 @@ export default function NewLoanType(props) {
   
 
  
-  const SubmitNewLoanType = (e) => {
+  const UpdateLoanType = (e) => {
     e.preventDefault();
     const data = {
+      id : newLoan.id,
       loanType: newLoan.loanType,
       description: newLoan.description,
 
@@ -114,7 +140,7 @@ export default function NewLoanType(props) {
     axios.post(`${baseUrl}/loantype/add`, data)
       .then(function (response) {
         //console.log(response)
-        utils.showSuccess("New Loan Saved Successfully.");
+        utils.showSuccess("Loan Updated Successfully.");
       })
       .catch(_errors => {
         //console.log('_errors',_errors);
@@ -142,22 +168,23 @@ export default function NewLoanType(props) {
   //This is same as componentdidmount()
   useEffect(() => {
     fetchLoanTypeStatus();
+    fetchLoanTypeData(loanTypeId);
   }, []);
 
   return (
     <AppTemplate>
-      <div className="new-loan-type">
+      <div className="edit-loan-type">
         {/* <Typography variant="h4" gutterBottom>
         Add New Loan Type
       </Typography> */}
-        <form autoComplete="off" onSubmit={SubmitNewLoanType}>
+        <form autoComplete="off" onSubmit={UpdateLoanType}>
           <Grid container spacing={1}>
             <Grid item xs={5}>
               <Paper variant="outlined" >
                 <Box width="auto" p={1} my={0.5}>
                   <TextField
                     name="loanType"
-                    //value={newLoan.loanType}
+                    value={newLoan.loanType}
                     id="outlined-full-width"
                     label="Loan Type Name"
                     placeholder="Enter Loan Type Name"
@@ -175,7 +202,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="description"
-                    //value={newLoan.description}
+                    value={newLoan.description}
                     id="outlined-multiline-static"
                     label="Description"
                     placeholder="Enter Description"
@@ -197,7 +224,7 @@ export default function NewLoanType(props) {
                     </InputLabel>
                     <Select
                       name="status"
-                      //value={newLoan.status}
+                      value={newLoan.status}
                       displayEmpty
                       className={classes.selectEmpty}
                       inputProps={{ 'aria-label': 'Without label' }}
@@ -224,7 +251,7 @@ export default function NewLoanType(props) {
                 <div>
                   <TextField
                     name="maxAmount"
-                    //value={newLoan.maxAmount}
+                    value={newLoan.maxAmount}
                     id="outlined-helperText"
                     label="Maximum Amount"
                     helperText="Some important text"
@@ -234,7 +261,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minAmount"
-                    //value={newLoan.minAmount}
+                    value={newLoan.minAmount}
                     id="outlined-helperText"
                     label="Minimum Amount"
                     helperText="Some important text"
@@ -244,7 +271,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="maxInterestRate"
-                    // value={newLoan.maxInterestRate}
+                     value={newLoan.maxInterestRate}
                     id="outlined-helperText"
                     label="Maximum Interest Rate"
                     helperText="Some important text"
@@ -254,7 +281,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minInterestRate"
-                    //value={newLoan.minInterestRate}
+                    value={newLoan.minInterestRate}
                     id="outlined-helperText"
                     label="Minimum Interest Rate"
                     helperText="Some important text"
@@ -264,7 +291,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="maxTimePeriod"
-                    //value={newLoan.maxTimePeriod}
+                    value={newLoan.maxTimePeriod}
                     id="outlined-helperText"
                     label="Maximum Time Period"
                     helperText="Some important text"
@@ -274,7 +301,7 @@ export default function NewLoanType(props) {
                   />
                   <TextField
                     name="minTimePeriod"
-                    //value={newLoan.minTimePeriod}
+                    value={newLoan.minTimePeriod}
                     id="outlined-helperText"
                     label="Minimum Time Period"
                     helperText="Some important text"
@@ -295,9 +322,9 @@ export default function NewLoanType(props) {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                endIcon={<SendIcon />}
+                endIcon={<UpdateIcon />}
               >
-                Save
+                Update
             </Button>
               {" "}
               <Button
