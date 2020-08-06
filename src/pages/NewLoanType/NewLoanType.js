@@ -123,7 +123,9 @@ export default function NewLoanType(props) {
       maxTimePeriod: newLoan.maxTimePeriod,
       minTimePeriod: newLoan.minTimePeriod,
       createdDate: dateTime,
-      createdUser: userId
+      createdUser: {
+        id: userId,
+      },
      
 
     };
