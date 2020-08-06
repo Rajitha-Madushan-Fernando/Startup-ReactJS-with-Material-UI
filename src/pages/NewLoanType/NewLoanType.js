@@ -18,7 +18,9 @@ import SendIcon from '@material-ui/icons/Send';
 import AppTemplate from '../Templates/AppTemplate/AppTemplate';
 import { appConfig } from '../../configs/app.config';
 import utils from '../../helper/utils';
+import SystemUser from "../../helper/user";
 const { baseUrl } = appConfig;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +42,10 @@ export default function NewLoanType(props) {
 
   const classes = useStyles();
   const [status, setStatus] = useState([]);
-   //Setup initial State
-   const initLoan  = {
+  const [dateTime, setDateTime] = useState(new Date());
+  const [userId, setUserdID] = useState([]);
+  //Setup initial State
+  const initLoan = {
     loanType: null,
     description: null,
     status: null,
@@ -52,30 +56,9 @@ export default function NewLoanType(props) {
     maxTimePeriod: null,
     minTimePeriod: null
   }
-  const onChange = (e) => {
-    e.persist();
-    setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
-  }
-
-
-  //Get Common Status
-  const fetchLoanTypeStatus = async () => {
-    axios.get(`${baseUrl}/commonstatus/list`)
-      .then(response => {
-        console.log('response', response);
-        setStatus(response.data);
-      })
-  };
-
- 
-  const [newLoan, setNewLoan] = useState(initLoan );
-  const resetData  = () => {
-    setNewLoan(initLoan)
-  }
-
 
   //Error Handling
-  const initErrors  = {
+  const initErrors = {
     loanType: '',
     description: '',
     status: '',
@@ -87,12 +70,43 @@ export default function NewLoanType(props) {
     minTimePeriod: ''
   }
   const [errors, setErrors] = useState(initErrors);
-  const resetError  = () => {
+  const resetError = () => {
     setErrors(initErrors)
   }
+
+
+  const onChange = (e) => {
+    e.persist();
+    setNewLoan({ ...newLoan, [e.target.name]: e.target.value });
+  }
+
+  //Get Logged in user id
+  const getCurrentUser = async () => {
+    //console.log(SystemUser.get())
+    setUserdID(SystemUser.get().id);
+  };
+
+
+  //Get Common Status
+  const fetchLoanTypeStatus = async () => {
+    axios.get(`${baseUrl}/commonstatus/list`)
+      .then(response => {
+        console.log('response', response);
+        setStatus(response.data);
+      })
+  };
+
+
+  const [newLoan, setNewLoan] = useState(initLoan);
+  const resetData = () => {
+    setNewLoan(initLoan)
+  }
+
+
   
 
- 
+
+
   const SubmitNewLoanType = (e) => {
     e.preventDefault();
     const data = {
@@ -107,7 +121,10 @@ export default function NewLoanType(props) {
       minInterestRate: newLoan.minInterestRate,
       maxInterestRate: newLoan.maxInterestRate,
       maxTimePeriod: newLoan.maxTimePeriod,
-      minTimePeriod: newLoan.minTimePeriod
+      minTimePeriod: newLoan.minTimePeriod,
+      createdDate: dateTime,
+      createdUser: userId
+     
 
     };
     console.log('data', data);
@@ -122,7 +139,7 @@ export default function NewLoanType(props) {
           //console.log('Test');
           const _sErrors = _errors.response.data.errors;
           const _error = _errors.response.data.error;
-          if(_sErrors!==undefined){
+          if (_sErrors !== undefined) {
             let errorsObj = {}
             _sErrors.forEach(error => {
               const { defaultMessage, field } = error
@@ -142,6 +159,7 @@ export default function NewLoanType(props) {
   //This is same as componentdidmount()
   useEffect(() => {
     fetchLoanTypeStatus();
+    getCurrentUser();
   }, []);
 
   return (
@@ -165,7 +183,7 @@ export default function NewLoanType(props) {
                     fullWidth
                     size="small"
                     error={errors.loanType ? 'error' : ''}
-                    
+
                     margin="normal"
                     InputLabelProps={{
                       shrink: true,
@@ -190,21 +208,17 @@ export default function NewLoanType(props) {
                     }}
                     onChange={onChange}
                   />
-
-                  <FormControl className={classes.formControl}>
-                    <InputLabel shrink htmlFor="age-native-label-placeholder">
-                      Status
-                    </InputLabel>
+                  <FormControl variant="outlined" className={classes.formControl} error={errors.status ? 'error' : ''}>
+                    <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel>
                     <Select
                       name="status"
-                      //value={newLoan.status}
-                      displayEmpty
-                      className={classes.selectEmpty}
-                      inputProps={{ 'aria-label': 'Without label' }}
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
                       onChange={onChange}
+                      label="Status"
                     >
-                      <MenuItem value="" disabled>
-                        Placeholder
+                      <MenuItem value="">
+                        <em>None</em>
                       </MenuItem>
                       {
                         status.map((eachRow, index) => {
@@ -214,8 +228,11 @@ export default function NewLoanType(props) {
                         })
                       }
                     </Select>
-                    <FormHelperText>Placeholder</FormHelperText>
+                    <FormHelperText>{errors.status}</FormHelperText>
                   </FormControl>
+
+
+
                 </Box>
               </Paper>
             </Grid>
